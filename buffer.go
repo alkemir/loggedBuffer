@@ -47,7 +47,7 @@ func NewBufferString(s string) *Buffer {
 // Bytes wraps bytes.Bytes with logging capabilities.
 func (b *Buffer) Bytes() []byte {
 	ret := b.Buffer.Bytes()
-	b.logCall("Bytes", ret)
+	b.logCall("Bytes", nil)
 	return ret
 }
 
