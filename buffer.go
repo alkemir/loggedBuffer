@@ -13,7 +13,7 @@ const timeFormat = "2006-01-02 15:04:05"
 // Buffer wraps a bytes.Buffer with logging capabilities.
 type Buffer struct {
 	log []string
-	*bytes.Buffer
+	bytes.Buffer
 }
 
 func (b *Buffer) logCall(call string, ret interface{}) {
@@ -32,23 +32,20 @@ func (b *Buffer) Logs() []string {
 
 // NewBuffer wraps bytes.NewBuffer with logging capabilities.
 func NewBuffer(buf []byte) *Buffer {
-	ret := &Buffer{Buffer: bytes.NewBuffer(buf)}
+	ret := &Buffer{Buffer: *bytes.NewBuffer(buf)}
 	ret.logCall("NewBuffer", nil)
 	return ret
 }
 
 // NewBufferString wraps bytes.NewBufferString with logging capabilities.
 func NewBufferString(s string) *Buffer {
-	ret := &Buffer{Buffer: bytes.NewBufferString(s)}
+	ret := &Buffer{Buffer: *bytes.NewBufferString(s)}
 	ret.logCall("NewBufferString", nil)
 	return ret
 }
 
 // Bytes wraps bytes.Bytes with logging capabilities.
 func (b *Buffer) Bytes() []byte {
-	if b == nil {
-		return (&bytes.Buffer{}).Bytes()
-	}
 	ret := b.Buffer.Bytes()
 	b.logCall("Bytes", ret)
 	return ret
@@ -131,9 +128,6 @@ func (b *Buffer) Reset() {
 
 // String wraps bytes.String with logging capabilities.
 func (b *Buffer) String() string {
-	if b == nil {
-		return "<nil>"
-	}
 	ret := b.Buffer.String()
 	b.logCall("String", nil)
 	return ret
