@@ -46,6 +46,9 @@ func NewBufferString(s string) *Buffer {
 
 // Bytes wraps bytes.Bytes with logging capabilities.
 func (b *Buffer) Bytes() []byte {
+	if b == nil {
+		return (&bytes.Buffer{}).Bytes()
+	}
 	ret := b.Buffer.Bytes()
 	b.logCall("Bytes", ret)
 	return ret
@@ -128,6 +131,9 @@ func (b *Buffer) Reset() {
 
 // String wraps bytes.String with logging capabilities.
 func (b *Buffer) String() string {
+	if b == nil {
+		return "<nil>"
+	}
 	ret := b.Buffer.String()
 	b.logCall("String", nil)
 	return ret
